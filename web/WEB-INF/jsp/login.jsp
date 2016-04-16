@@ -9,10 +9,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="css/styles.css" type="text/css">
         <title>Login Page</title>
     </head>
     <body>
-        <div>
+        <div class='login'>
             <%--
             the action of the login form must always be j_security_check
             see more: https://docs.oracle.com/cd/E19226-01/820-7627/bncbq/index.html
