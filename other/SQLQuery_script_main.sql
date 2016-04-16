@@ -14,10 +14,16 @@ CREATE DATABASE paymentsDB_v_1_3_SQLExpress;
 USE paymentsDB_v_1_3_SQLExpress;
 GO
 
--- using MD5 as basic hash for passwords (in study) - then column password using 32 chars
--- using word "password" (with no quotes of course) for rassword for all users
--- '5f4dcc3b5aa765d61d8327deb882cf99'
+/****** 
 
+Create basic tables for using it as jdbcRealm with glassfish    Script Date: 16.04.2016 23:53:05
+using MD5 as basic hash for passwords (in study) - then column password using 32 chars
+using word "password" (with no quotes of course) for rassword for all users
+'5f4dcc3b5aa765d61d8327deb882cf99'
+
+******/
+
+/****** Object:  Table [client]    Script Date: 16.04.2016 23:53:05 ******/
 CREATE TABLE client
 (
   client_ID           INT      NOT NULL PRIMARY KEY IDENTITY (1,1),
@@ -30,12 +36,14 @@ CREATE TABLE client
   typeOfUser      NVARCHAR(128) NOT NULL
   );
 
+/****** Object:  Table [clients_groups]    Script Date: 16.04.2016 23:53:05 ******/
 CREATE TABLE clients_groups
 (
   groups_ID           INT      NOT NULL IDENTITY,
   email           NVARCHAR(50) NOT NULL UNIQUE,
 );
 
+/****** Object:  Table [groups]    Script Date: 16.04.2016 23:53:05 ******/
 CREATE TABLE groups
 (
    groups_ID      int          NOT NULL PRIMARY KEY IDENTITY (1,1),
@@ -43,6 +51,7 @@ CREATE TABLE groups
    description   VARCHAR(300)
 );
 
+/****** create keys and dependencies    Script Date: 16.04.2016 23:53:05 ******/
 CREATE UNIQUE INDEX SQL_PERSON_EMAIL_INDEX ON client(email)
 
 CREATE UNIQUE INDEX SQL_PERSON_ID_INDEX ON client(client_ID)
@@ -62,7 +71,7 @@ FOREIGN KEY (groups_ID)
 REFERENCES groups(groups_ID)
 ;
 
-
+/****** populate tables    Script Date: 16.04.2016 23:53:05 ******/
 --SET IDENTITY_INSERT client ON;
 INSERT INTO client(lastname, firstname, titleofcourtesy, phone, email, password, typeOfUser)
   VALUES
@@ -99,3 +108,53 @@ VALUES
   (1,'Cameron@gmail.com'),
   (1,'Dolgopyatova@gmail.com');
 SET IDENTITY_INSERT clients_groups OFF;
+
+USE paymentsDB_v_1_3_SQLExpress;
+GO
+
+CREATE VIEW v_user_role AS
+SELECT u.email, g.name, u.password 
+FROM client u, groups g, clients_groups ug 
+WHERE u.email = ug.email and g.groups_ID = ug.groups_ID;
+
+
+/****** 
+
+Create tables for using it as storage for data: bank accounts, credit cards etc. Some tables 
+will be created as sql-dump from first database
+
+******/
+
+/****** Object:  Table [bankAccount]    Script Date: 16.04.2016 23:53:05 ******/
+
+CREATE TABLE bankAccount(
+	account_ID int NOT NULL IDENTITY (1,1),
+	client_ID int NOT NULL,
+	currentBalance float NOT NULL,
+	status [bit] NOT NULL,
+ CONSTRAINT [PK_bankAccount] PRIMARY KEY CLUSTERED 
+(
+	account_ID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE bankAccount  WITH CHECK 
+ADD  CONSTRAINT FK_bankAccount_client 
+FOREIGN KEY(client_ID)
+REFERENCES client (client_ID)
+GO
+
+INSERT INTO bankAccount (client_ID,currentBalance, status)
+VALUES
+  (1, 10000, 0),
+  (2, 10000, 0),
+  (3, 10000, 0),
+  (4, 10000, 0),
+  (5, 10000, 0),
+  (6, 10000, 0),
+  (7, 10000, 0),
+  (8, 10000, 0),
+  (9, 10000, 0),
+  (10, 10000, 0);
