@@ -140,7 +140,7 @@ CREATE TABLE bankAccount(
 
 GO
 
-ALTER TABLE bankAccount  WITH CHECK 
+ALTER TABLE bankAccount
 ADD  CONSTRAINT FK_bankAccount_client 
 FOREIGN KEY(client_ID)
 REFERENCES client (client_ID)
@@ -158,3 +158,120 @@ VALUES
   (8, 10000, 0),
   (9, 10000, 0),
   (10, 10000, 0);
+INSERT INTO bankAccount (client_ID,currentBalance, status)
+VALUES
+  (1, 8000, 0),
+  (2, 8000, 0),
+  (3, 8000, 0),
+  (4, 8000, 0),
+  (5, 8000, 0),
+  (6, 8000, 0),
+  (7, 8000, 0),
+  (8, 8000, 0),
+  (9, 8000, 0),
+  (10, 8000, 0);
+
+
+/****** Object:  Table creditCards    Script Date: 17.04.2016 0:32:23 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE creditCards(
+	card_ID int NOT NULL IDENTITY (1,1),
+	account_ID int NOT NULL,
+	client_ID int NOT NULL,
+	PAN nchar(16) NOT NULL,
+	secureCode int NOT NULL,
+	validDate date NOT NULL,
+	[status] bit NOT NULL,
+ CONSTRAINT [PK_creditCards] PRIMARY KEY CLUSTERED 
+(
+	card_ID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE creditCards
+ADD  CONSTRAINT FK_creditCards_bankAccount
+FOREIGN KEY(account_ID)
+REFERENCES bankAccount (account_ID)
+GO
+
+ALTER TABLE creditCards
+ADD  CONSTRAINT FK_creditCards_client FOREIGN KEY(client_ID)
+REFERENCES client (client_ID)
+GO
+
+INSERT INTO creditCards (account_ID, client_ID, PAN, secureCode, validDate, status)
+VALUES
+  (1, 1, 5100479905639871, 1939, '2017-01-01', 0),
+  (2, 2, 5100479905639872, 2939, '2017-01-01', 0),
+  (3, 3, 5100479905639873, 3939, '2017-01-01', 0),
+  (4, 4, 5100479905639874, 4939, '2017-01-01', 0),
+  (5, 5, 5100479905639875, 5939, '2017-01-01', 0),
+  (6, 6, 5100479905639876, 6939, '2017-01-01', 0),
+  (7, 7, 5100479905639877, 7939, '2017-01-01', 0),
+  (8, 8, 5100479905639878, 8939, '2017-01-01', 0),
+  (9, 9, 5100479905639879, 9939, '2017-01-01', 0),
+  (10, 10, 5100479905639870, 0939, '2017-01-01', 0),
+  (11, 1, 5689479905639871, 3931, '2017-01-01', 0),
+  (12, 2, 5689479905639872, 3932, '2017-01-01', 0),
+  (13, 3, 5689479905639873, 3933, '2017-01-01', 0),
+  (14, 4, 5689479905639874, 3934, '2017-01-01', 0),
+  (15, 5, 5689479905639875, 3935, '2017-01-01', 0),
+  (16, 6, 5689479905639876, 3936, '2017-01-01', 0),
+  (17, 7, 5689479905639877, 3937, '2017-01-01', 0),
+  (18, 8, 5689479905639878, 3938, '2017-01-01', 0),
+  (19, 9, 5689479905639879, 3939, '2017-01-01', 0),
+  (20, 10, 5689479905639870, 3930, '2017-01-01', 0);
+
+
+/****** Object:  Table [dbo].[paymentsHistory]    Script Date: 17.04.2016 1:15:31 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE paymentsHistory(
+	payment_ID int NOT NULL IDENTITY (1,1),
+	client_ID int NOT NULL,
+	clientAccount_ID int NOT NULL,
+	amount float NOT NULL,
+	beneficiarClienst_ID int NOT NULL,
+	beneficiarAccount_ID int NOT NULL,
+ CONSTRAINT [PK_paymentsHistory] PRIMARY KEY CLUSTERED 
+(
+	payment_ID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE paymentsHistory
+ADD  CONSTRAINT FK_paymentsHistory_bankAccount
+FOREIGN KEY(clientAccount_ID)
+REFERENCES bankAccount (account_ID)
+GO
+
+ALTER TABLE paymentsHistory
+ADD  CONSTRAINT FK_paymentsHistory_bankAccount1
+FOREIGN KEY(beneficiarAccount_ID)
+REFERENCES bankAccount ([account_ID])
+GO
+
+ALTER TABLE paymentsHistory 
+ADD  CONSTRAINT FK_paymentsHistory_client 
+FOREIGN KEY(client_ID)
+REFERENCES client (client_ID)
+GO
+
+ALTER TABLE paymentsHistory
+ADD  CONSTRAINT FK_paymentsHistory_client1
+FOREIGN KEY(beneficiarClienst_ID)
+REFERENCES client (client_ID)
+GO
