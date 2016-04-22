@@ -28,7 +28,7 @@ Developed with:
 
 Books:
 
-1 .Java EE 7 with GlassFish 4 Application Server by David R. Heffelfinger,
+1. Java EE 7 with GlassFish 4 Application Server by David R. Heffelfinger,
   * Third Edition: March 2014 ISBN 978-1-78217-688-6
   * https://www.packtpub.com/application-development/java-ee-7-glassfish-4-application-server
 2. EJB 3 in Action by Debu Panda, Reza Rahman, Ryan Cuprak, Michael Remijan
