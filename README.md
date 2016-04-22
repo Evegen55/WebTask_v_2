@@ -10,6 +10,8 @@ Unblock account allowed oly user with administrator privilegies.
 
 - [The Java Server Pages](http://www.oracle.com/technetwork/java/javaee/jsp/index.html)
 - [The Java Servlet Technology] (http://docs.oracle.com/javaee/6/tutorial/doc/bnafd.html)
+- [Enterprise JavaBeans Technology] (http://www.oracle.com/technetwork/java/javaee/ejb/index.html)
+- [The Java Persistence API] (http://www.oracle.com/technetwork/java/javaee/tech/persistence-jsp-140049.html)
 - [The Java Persistence Query Language] (http://docs.oracle.com/javaee/6/tutorial/doc/bnbtg.html)
 - [JavaServer Pages Standard Tag Library] (https://jstl.java.net/)
 
