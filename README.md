@@ -5,28 +5,28 @@ In this system User has one or more credit cards which links to a single bank ac
 We are able to create a payment, add funds to a bank account and block bank account. 
 Unblock account allowed oly user with administrator privilegies.
 
-In this project next technologies have been used:
+### In this project next technologies have been used:
 
 - [The Java Server Pages](http://www.oracle.com/technetwork/java/javaee/jsp/index.html)
 - [The Java Servlet Technology] (http://docs.oracle.com/javaee/6/tutorial/doc/bnafd.html)
 - [The Java Persistence Query Language] (http://docs.oracle.com/javaee/6/tutorial/doc/bnbtg.html)
 - [JavaServer Pages Standard Tag Library] (https://jstl.java.net/)
 
-Also next patterns have been used:
+### Also next patterns have been used:
 
 - Model-Viev-Controller(MVC)
 - Data Access Object (DAO)
 - Command
 
-Developed with:
+### Developed with next tools:
 
-- NetBeansIDE dev 201602200002 (http://bits.netbeans.org/dev/nightly/)
-- GlassFish-5.0 (http://download.oracle.com/glassfish/5.0/nightly/)
-- Microsoft SQL Server Express 2014
-- MySQL 6.3
-- Microsoft JDBC Driver 6.0 for SQL Server (sqljdbc42.jar)
+- [NetBeansIDE dev 201604070001] (http://bits.netbeans.org/dev/nightly/)
+- [GlassFish-5.0] (http://download.oracle.com/glassfish/5.0/nightly/)
+- [Microsoft SQL Server Express 2014] (https://www.microsoft.com/ru-ru/download/details.aspx?id=42299)
+- [MySQL 6.3] (http://dev.mysql.com/downloads/windows/)
+- [Microsoft JDBC Driver 6.0 for SQL Server (sqljdbc42.jar)] (https://www.microsoft.com/ru-ru/download/details.aspx?id=11774)
 
-Books:
+### and books:
 
 1. Java EE 7 with GlassFish 4 Application Server by David R. Heffelfinger,
   * Third Edition: March 2014 ISBN 978-1-78217-688-6
