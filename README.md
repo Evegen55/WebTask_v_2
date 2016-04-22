@@ -1,6 +1,7 @@
 # WebTask_v_2
 
-simple JavaEE project This project allows us to use some Payments system. 
+### A simple JavaEE project.
+This project allows us to use some Payments system. 
 In this system User has one or more credit cards which links to a single bank account. 
 We are able to create a payment, add funds to a bank account and block bank account. 
 Unblock account allowed oly user with administrator privilegies.
