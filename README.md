@@ -7,10 +7,10 @@ Unblock account allowed oly user with administrator privilegies.
 
 In this project next technologies have been used:
 
-- The Java Server Pages(http://www.oracle.com/technetwork/java/javaee/jsp/index.html)
-- The Java Servlet Technology (http://docs.oracle.com/javaee/6/tutorial/doc/bnafd.html)
-- The Java Persistence Query Language (http://docs.oracle.com/javaee/6/tutorial/doc/bnbtg.html)
-- JavaServer Pages Standard Tag Library (https://jstl.java.net/)
+- [The Java Server Pages](http://www.oracle.com/technetwork/java/javaee/jsp/index.html)
+- [The Java Servlet Technology] (http://docs.oracle.com/javaee/6/tutorial/doc/bnafd.html)
+- [The Java Persistence Query Language] (http://docs.oracle.com/javaee/6/tutorial/doc/bnbtg.html)
+- [JavaServer Pages Standard Tag Library] (https://jstl.java.net/)
 
 Also next patterns have been used:
 
