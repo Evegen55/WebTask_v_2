@@ -28,19 +28,19 @@ Developed with:
 
 Books:
 
-- Java EE 7 with GlassFish 4 Application Server by David R. Heffelfinger, 
+1 .Java EE 7 with GlassFish 4 Application Server by David R. Heffelfinger, 
             * Third Edition: March 2014 ISBN 978-1-78217-688-6
             * https://www.packtpub.com/application-development/java-ee-7-glassfish-4-application-server
-- EJB 3 in Action by Debu Panda, Reza Rahman, Ryan Cuprak, Michael Remijan
+2. EJB 3 in Action by Debu Panda, Reza Rahman, Ryan Cuprak, Michael Remijan
             * Second Edition: April 2014 ISBN 9781935182993
             * https://manning.com/books/ejb-3-in-action-second-edition
-- The Java EE 7 Tutorial
+3. The Java EE 7 Tutorial
             * http://docs.oracle.com/javaee/7/tutorial/doc/
-- Java Platform, Enterprise Edition Your First Cup: An Introduction to the Java EE Platform
+4. Java Platform, Enterprise Edition Your First Cup: An Introduction to the Java EE Platform
             * Release 7 E39032-01 September 2014
             * https://docs.oracle.com/javaee/7/JEEFC.pdf
             * https://docs.oracle.com/javaee/7/firstcup/
-- Java servlet tutorial by Pankaj Kumar
+5. Java servlet tutorial by Pankaj Kumar
             * http://www.journaldev.com/
-- all lessons by EPAM Java school
+6. all lessons by EPAM Java school
             
