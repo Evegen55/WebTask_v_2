@@ -45,10 +45,13 @@ public class DispatherAccounts extends HttpServlet {
         try {
             
             String remoteUser = request.getRemoteUser();
-            String admMainPage = "/admin_for_unblocking/admin.jsp";
+            String admMainPage = "/admin_pages/admin.jsp";
             String usrMainPage = "/simple_user_pages/main_page.jsp";
             
-            if(remoteUser.equalsIgnoreCase("admin")) {
+            System.out.println(remoteUser);
+            System.out.println(request.getUserPrincipal());
+            
+            if(remoteUser.equalsIgnoreCase("admin@gmail.com")) {
                 request.getRequestDispatcher(admMainPage).forward(request, response);
             } else {
                 request.getRequestDispatcher(usrMainPage).forward(request, response);
