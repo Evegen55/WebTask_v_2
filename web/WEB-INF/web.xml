@@ -7,7 +7,7 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>pages_for_all_users/index.html</welcome-file>
+        <welcome-file>pages_for_all_users/start.jsp</welcome-file>
     </welcome-file-list>
     <security-constraint>
         <display-name>For all users</display-name>
