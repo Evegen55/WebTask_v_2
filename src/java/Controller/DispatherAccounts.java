@@ -16,7 +16,6 @@
 package Controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -48,8 +47,8 @@ public class DispatherAccounts extends HttpServlet {
             String admMainPage = "/admin_pages/admin.jsp";
             String usrMainPage = "/simple_user_pages/main_page.jsp";
             
-            System.out.println(remoteUser);
-            System.out.println(request.getUserPrincipal());
+            //System.out.println(remoteUser);
+            //System.out.println(request.getUserPrincipal());
             
             if(remoteUser.equalsIgnoreCase("admin@gmail.com")) {
                 request.getRequestDispatcher(admMainPage).forward(request, response);
