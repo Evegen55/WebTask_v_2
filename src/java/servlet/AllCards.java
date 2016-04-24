@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,7 +26,8 @@ import model.CreditCards;
 @WebServlet(name = "AllCards", urlPatterns = {"/AllCards"})
 public class AllCards extends HttpServlet {
     
-    @EJB
+    //@EJB
+    @Inject
     private ClientDAO clientDAO;
     
     /**
@@ -41,11 +43,8 @@ public class AllCards extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        String userEmail = request.getRemoteUser();
-        System.out.println("user" + userEmail);
-        Client client = clientDAO.getClientByEmail(userEmail);
-        int client_ID = client.getClientID();
-        List<CreditCards> list = clientDAO.getAllCardsByClientID(client_ID);
+        Client client = clientDAO.getClientByEmail(request.getRemoteUser());
+        List<CreditCards> list = clientDAO.getAllCardsByClientID(client.getClientID());
         
         request.setAttribute("allcards", list);
         request.getRequestDispatcher("/simple_user_pages/allcards.jsp").forward(request, response);
