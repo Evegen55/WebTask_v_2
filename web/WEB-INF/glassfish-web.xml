@@ -12,10 +12,6 @@
   <resource-ref>
     <res-ref-name>payments_v_1_3_glassfish</res-ref-name>
     <jndi-name>payments_v_1_3_glassfish</jndi-name>
-    <default-resource-principal>
-      <name>admin</name>
-      <password>admin</password>
-    </default-resource-principal>
   </resource-ref>
   <class-loader delegate="true"/>
   <jsp-config>
