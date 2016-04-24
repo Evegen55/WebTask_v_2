@@ -7,9 +7,7 @@ package servlet;
 
 import DAO.ClientDAO;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
