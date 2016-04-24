@@ -53,7 +53,9 @@ public class DispatcherServlet extends HttpServlet {
             String destinationMakePayment_path = "/simpleuser/makepayment.jsp";
             
             if (operation.equalsIgnoreCase("my_cards")) {
-                response.sendRedirect(response.encodeRedirectURL(destinationCards));
+                request.getRequestDispatcher(
+                        response.encodeRedirectURL(destinationCards))
+                        .forward(request, response);
             } else if (operation.equalsIgnoreCase("my bank accounts")) {
                 response.sendRedirect(response.encodeRedirectURL(destinationAccounts));
             } else if (operation.equalsIgnoreCase("payments")) {
