@@ -125,6 +125,9 @@ will be created as sql-dump from first database
 
 ******/
 
+USE paymentsDB_v_1_3_SQLExpress;
+GO
+
 /****** Object:  Table [bankAccount]    Script Date: 16.04.2016 23:53:05 ******/
 
 CREATE TABLE bankAccount(
