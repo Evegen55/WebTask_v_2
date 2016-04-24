@@ -1,0 +1,22 @@
+            
+body {
+ background:url(../img/world-map-desktop-wallpaper-51295-52991-hd-wallpapers.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  color: #e7e7e7;
+  font-family: sans-serif;
+}
+a {
+  color: #e7e7e7;
+  text-decoration: none;
+  
+}
+.remember {
+  padding-right: 30px;
+  font-size: 12px;
+  text-indent: 25px;
+  line-height: 15px;
+  text-align: right
+}
