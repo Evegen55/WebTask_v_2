@@ -7,7 +7,6 @@ package model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -43,7 +42,7 @@ public class CreditCards implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "cardID")
+    @Column(name = "card_ID")
     private Integer cardID;
     @Basic(optional = false)
     @NotNull
@@ -61,13 +60,12 @@ public class CreditCards implements Serializable {
     private Date validDate;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
     @Column(name = "status")
-    private String status;
-    @JoinColumn(name = "accountID", referencedColumnName = "accountID")
+    private boolean status;
+    @JoinColumn(name = "account_ID", referencedColumnName = "account_ID")
     @ManyToOne(optional = false)
     private BankAccount accountID;
-    @JoinColumn(name = "clientID", referencedColumnName = "clientID")
+    @JoinColumn(name = "client_ID", referencedColumnName = "client_ID")
     @ManyToOne(optional = false)
     private Client clientID;
 
@@ -78,7 +76,7 @@ public class CreditCards implements Serializable {
         this.cardID = cardID;
     }
 
-    public CreditCards(Integer cardID, String pan, int secureCode, Date validDate, String status) {
+    public CreditCards(Integer cardID, String pan, int secureCode, Date validDate, boolean status) {
         this.cardID = cardID;
         this.pan = pan;
         this.secureCode = secureCode;
@@ -118,11 +116,11 @@ public class CreditCards implements Serializable {
         this.validDate = validDate;
     }
 
-    public String getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 
@@ -144,11 +142,10 @@ public class CreditCards implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 41 * hash + Objects.hashCode(this.cardID);
+        int hash = 0;
+        hash += (cardID != null ? cardID.hashCode() : 0);
         return hash;
     }
-
 
     @Override
     public boolean equals(Object object) {
@@ -157,8 +154,7 @@ public class CreditCards implements Serializable {
             return false;
         }
         CreditCards other = (CreditCards) object;
-        if ((this.cardID == null && other.cardID != null) || 
-                (this.cardID != null && !this.cardID.equals(other.cardID))) {
+        if ((this.cardID == null && other.cardID != null) || (this.cardID != null && !this.cardID.equals(other.cardID))) {
             return false;
         }
         return true;
@@ -166,11 +162,7 @@ public class CreditCards implements Serializable {
 
     @Override
     public String toString() {
-        return "CreditCards{" + "cardID=" + cardID + ", pan=" + pan + ", secureCode=" 
-                + secureCode + ", validDate=" + validDate + ", status=" + status 
-                + ", accountID=" + accountID + ", clientID=" + clientID + '}';
+        return "model.CreditCards[ cardID=" + cardID + " ]";
     }
-
-    
     
 }

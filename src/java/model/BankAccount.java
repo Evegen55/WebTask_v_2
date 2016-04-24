@@ -6,8 +6,7 @@
 package model;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Objects;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -41,23 +40,25 @@ public class BankAccount implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "accountID")
+    @Column(name = "account_ID")
     private Integer accountID;
     @Basic(optional = false)
     @NotNull
     @Column(name = "currentBalance")
     private double currentBalance;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "status")
-    private Integer status;
-    @JoinColumn(name = "clientID", referencedColumnName = "clientID")
+    private boolean status;
+    @JoinColumn(name = "client_ID", referencedColumnName = "client_ID")
     @ManyToOne(optional = false)
     private Client clientID;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountID")
-    private Collection<CreditCards> creditCardsCollection;
+    private List<CreditCards> creditCardsList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientAccountID")
-    private Collection<PaymentsHistory> paymentsHistoryCollection;
+    private List<PaymentsHistory> paymentsHistoryList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "beneficiarAccountID")
-    private Collection<PaymentsHistory> paymentsHistoryCollection1;
+    private List<PaymentsHistory> paymentsHistoryList1;
 
     public BankAccount() {
     }
@@ -66,9 +67,10 @@ public class BankAccount implements Serializable {
         this.accountID = accountID;
     }
 
-    public BankAccount(Integer accountID, double currentBalance) {
+    public BankAccount(Integer accountID, double currentBalance, boolean status) {
         this.accountID = accountID;
         this.currentBalance = currentBalance;
+        this.status = status;
     }
 
     public Integer getAccountID() {
@@ -87,11 +89,11 @@ public class BankAccount implements Serializable {
         this.currentBalance = currentBalance;
     }
 
-    public Integer getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 
@@ -104,40 +106,38 @@ public class BankAccount implements Serializable {
     }
 
     @XmlTransient
-    public Collection<CreditCards> getCreditCardsCollection() {
-        return creditCardsCollection;
+    public List<CreditCards> getCreditCardsList() {
+        return creditCardsList;
     }
 
-    public void setCreditCardsCollection(Collection<CreditCards> creditCardsCollection) {
-        this.creditCardsCollection = creditCardsCollection;
-    }
-
-    @XmlTransient
-    public Collection<PaymentsHistory> getPaymentsHistoryCollection() {
-        return paymentsHistoryCollection;
-    }
-
-    public void setPaymentsHistoryCollection(Collection<PaymentsHistory> paymentsHistoryCollection) {
-        this.paymentsHistoryCollection = paymentsHistoryCollection;
+    public void setCreditCardsList(List<CreditCards> creditCardsList) {
+        this.creditCardsList = creditCardsList;
     }
 
     @XmlTransient
-    public Collection<PaymentsHistory> getPaymentsHistoryCollection1() {
-        return paymentsHistoryCollection1;
+    public List<PaymentsHistory> getPaymentsHistoryList() {
+        return paymentsHistoryList;
     }
 
-    public void setPaymentsHistoryCollection1(Collection<PaymentsHistory> paymentsHistoryCollection1) {
-        this.paymentsHistoryCollection1 = paymentsHistoryCollection1;
+    public void setPaymentsHistoryList(List<PaymentsHistory> paymentsHistoryList) {
+        this.paymentsHistoryList = paymentsHistoryList;
+    }
+
+    @XmlTransient
+    public List<PaymentsHistory> getPaymentsHistoryList1() {
+        return paymentsHistoryList1;
+    }
+
+    public void setPaymentsHistoryList1(List<PaymentsHistory> paymentsHistoryList1) {
+        this.paymentsHistoryList1 = paymentsHistoryList1;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 17 * hash + Objects.hashCode(this.accountID);
+        int hash = 0;
+        hash += (accountID != null ? accountID.hashCode() : 0);
         return hash;
     }
-
-    
 
     @Override
     public boolean equals(Object object) {
@@ -154,6 +154,7 @@ public class BankAccount implements Serializable {
 
     @Override
     public String toString() {
-        return "BankAccount{" + "accountID=" + accountID + ", currentBalance=" + currentBalance + ", status=" + status + ", clientID=" + clientID + '}';
+        return "model.BankAccount[ accountID=" + accountID + " ]";
     }
+    
 }

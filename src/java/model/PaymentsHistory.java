@@ -6,7 +6,6 @@
 package model;
 
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,22 +35,22 @@ public class PaymentsHistory implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "paymentID")
+    @Column(name = "payment_ID")
     private Integer paymentID;
     @Basic(optional = false)
     @NotNull
     @Column(name = "amount")
     private double amount;
-    @JoinColumn(name = "clientAccountID", referencedColumnName = "accountID")
+    @JoinColumn(name = "clientAccount_ID", referencedColumnName = "account_ID")
     @ManyToOne(optional = false)
     private BankAccount clientAccountID;
-    @JoinColumn(name = "beneficiarAccountID", referencedColumnName = "accountID")
+    @JoinColumn(name = "beneficiarAccount_ID", referencedColumnName = "account_ID")
     @ManyToOne(optional = false)
     private BankAccount beneficiarAccountID;
-    @JoinColumn(name = "clientID", referencedColumnName = "clientID")
+    @JoinColumn(name = "client_ID", referencedColumnName = "client_ID")
     @ManyToOne(optional = false)
     private Client clientID;
-    @JoinColumn(name = "beneficiarClienstID", referencedColumnName = "clientID")
+    @JoinColumn(name = "beneficiarClienst_ID", referencedColumnName = "client_ID")
     @ManyToOne(optional = false)
     private Client beneficiarClienstID;
 
@@ -117,8 +116,8 @@ public class PaymentsHistory implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 31 * hash + Objects.hashCode(this.paymentID);
+        int hash = 0;
+        hash += (paymentID != null ? paymentID.hashCode() : 0);
         return hash;
     }
 
@@ -129,8 +128,7 @@ public class PaymentsHistory implements Serializable {
             return false;
         }
         PaymentsHistory other = (PaymentsHistory) object;
-        if ((this.paymentID == null && other.paymentID != null) || 
-                (this.paymentID != null && !this.paymentID.equals(other.paymentID))) {
+        if ((this.paymentID == null && other.paymentID != null) || (this.paymentID != null && !this.paymentID.equals(other.paymentID))) {
             return false;
         }
         return true;
@@ -138,12 +136,7 @@ public class PaymentsHistory implements Serializable {
 
     @Override
     public String toString() {
-        return "PaymentsHistory{" + "paymentID=" + paymentID + ", amount=" + amount 
-                + ", clientAccountID=" + clientAccountID + ", beneficiarAccountID=" 
-                + beneficiarAccountID + ", clientID=" + clientID + ", beneficiarClienstID=" 
-                + beneficiarClienstID + '}';
+        return "model.PaymentsHistory[ paymentID=" + paymentID + " ]";
     }
-
-   
     
 }

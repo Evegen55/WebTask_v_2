@@ -6,8 +6,7 @@
 package model;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Objects;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,50 +31,66 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Client.findAll", query = "SELECT c FROM Client c"),
     @NamedQuery(name = "Client.findByClientID", query = "SELECT c FROM Client c WHERE c.clientID = :clientID"),
-    @NamedQuery(name = "Client.findByNickName", query = "SELECT c FROM Client c WHERE c.nickName = :nickName"),
-    @NamedQuery(name = "Client.findByFirstName", query = "SELECT c FROM Client c WHERE c.firstName = :firstName"),
-    @NamedQuery(name = "Client.findByLastName", query = "SELECT c FROM Client c WHERE c.lastName = :lastName"),
+    @NamedQuery(name = "Client.findByLastname", query = "SELECT c FROM Client c WHERE c.lastname = :lastname"),
+    @NamedQuery(name = "Client.findByFirstname", query = "SELECT c FROM Client c WHERE c.firstname = :firstname"),
+    @NamedQuery(name = "Client.findByTitleofcourtesy", query = "SELECT c FROM Client c WHERE c.titleofcourtesy = :titleofcourtesy"),
     @NamedQuery(name = "Client.findByPhone", query = "SELECT c FROM Client c WHERE c.phone = :phone"),
-    @NamedQuery(name = "Client.findByEmail", query = "SELECT c FROM Client c WHERE c.email = :email")})
+    @NamedQuery(name = "Client.findByEmail", query = "SELECT c FROM Client c WHERE c.email = :email"),
+    @NamedQuery(name = "Client.findByPassword", query = "SELECT c FROM Client c WHERE c.password = :password"),
+    @NamedQuery(name = "Client.findByTypeOfUser", query = "SELECT c FROM Client c WHERE c.typeOfUser = :typeOfUser")})
 public class Client implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "clientID")
+    @Column(name = "client_ID")
     private Integer clientID;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "lastname")
+    private String lastname;
+    @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 10)
-    @Column(name = "NickName")
-    private String nickName;
+    @Column(name = "firstname")
+    private String firstname;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "FirstName")
-    private String firstName;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "LastName")
-    private String lastName;
+    @Size(min = 1, max = 25)
+    @Column(name = "titleofcourtesy")
+    private String titleofcourtesy;
     // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Недопустимый формат номера телефона/факса (должен иметь формат xxx-xxx-xxxx)")//if the field contains phone or fax number consider using this annotation to enforce field validation
-    @Size(max = 20)
-    @Column(name = "Phone")
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 24)
+    @Column(name = "phone")
     private String phone;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Недопустимый адрес электронной почты")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 10)
-    @Column(name = "Email")
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "email")
     private String email;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 32)
+    @Column(name = "password")
+    private String password;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 128)
+    @Column(name = "typeOfUser")
+    private String typeOfUser;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientID")
-    private Collection<BankAccount> bankAccountCollection;
+    private List<BankAccount> bankAccountList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientID")
-    private Collection<CreditCards> creditCardsCollection;
+    private List<CreditCards> creditCardsList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientID")
-    private Collection<PaymentsHistory> paymentsHistoryCollection;
+    private List<PaymentsHistory> paymentsHistoryList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "beneficiarClienstID")
-    private Collection<PaymentsHistory> paymentsHistoryCollection1;
+    private List<PaymentsHistory> paymentsHistoryList1;
 
     public Client() {
     }
@@ -84,11 +99,15 @@ public class Client implements Serializable {
         this.clientID = clientID;
     }
 
-    public Client(Integer clientID, String nickName, String firstName, String lastName) {
+    public Client(Integer clientID, String lastname, String firstname, String titleofcourtesy, String phone, String email, String password, String typeOfUser) {
         this.clientID = clientID;
-        this.nickName = nickName;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.lastname = lastname;
+        this.firstname = firstname;
+        this.titleofcourtesy = titleofcourtesy;
+        this.phone = phone;
+        this.email = email;
+        this.password = password;
+        this.typeOfUser = typeOfUser;
     }
 
     public Integer getClientID() {
@@ -99,28 +118,28 @@ public class Client implements Serializable {
         this.clientID = clientID;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getTitleofcourtesy() {
+        return titleofcourtesy;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setTitleofcourtesy(String titleofcourtesy) {
+        this.titleofcourtesy = titleofcourtesy;
     }
 
     public String getPhone() {
@@ -139,50 +158,64 @@ public class Client implements Serializable {
         this.email = email;
     }
 
-    @XmlTransient
-    public Collection<BankAccount> getBankAccountCollection() {
-        return bankAccountCollection;
+    public String getPassword() {
+        return password;
     }
 
-    public void setBankAccountCollection(Collection<BankAccount> bankAccountCollection) {
-        this.bankAccountCollection = bankAccountCollection;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    @XmlTransient
-    public Collection<CreditCards> getCreditCardsCollection() {
-        return creditCardsCollection;
+    public String getTypeOfUser() {
+        return typeOfUser;
     }
 
-    public void setCreditCardsCollection(Collection<CreditCards> creditCardsCollection) {
-        this.creditCardsCollection = creditCardsCollection;
-    }
-
-    @XmlTransient
-    public Collection<PaymentsHistory> getPaymentsHistoryCollection() {
-        return paymentsHistoryCollection;
-    }
-
-    public void setPaymentsHistoryCollection(Collection<PaymentsHistory> paymentsHistoryCollection) {
-        this.paymentsHistoryCollection = paymentsHistoryCollection;
+    public void setTypeOfUser(String typeOfUser) {
+        this.typeOfUser = typeOfUser;
     }
 
     @XmlTransient
-    public Collection<PaymentsHistory> getPaymentsHistoryCollection1() {
-        return paymentsHistoryCollection1;
+    public List<BankAccount> getBankAccountList() {
+        return bankAccountList;
     }
 
-    public void setPaymentsHistoryCollection1(Collection<PaymentsHistory> paymentsHistoryCollection1) {
-        this.paymentsHistoryCollection1 = paymentsHistoryCollection1;
+    public void setBankAccountList(List<BankAccount> bankAccountList) {
+        this.bankAccountList = bankAccountList;
+    }
+
+    @XmlTransient
+    public List<CreditCards> getCreditCardsList() {
+        return creditCardsList;
+    }
+
+    public void setCreditCardsList(List<CreditCards> creditCardsList) {
+        this.creditCardsList = creditCardsList;
+    }
+
+    @XmlTransient
+    public List<PaymentsHistory> getPaymentsHistoryList() {
+        return paymentsHistoryList;
+    }
+
+    public void setPaymentsHistoryList(List<PaymentsHistory> paymentsHistoryList) {
+        this.paymentsHistoryList = paymentsHistoryList;
+    }
+
+    @XmlTransient
+    public List<PaymentsHistory> getPaymentsHistoryList1() {
+        return paymentsHistoryList1;
+    }
+
+    public void setPaymentsHistoryList1(List<PaymentsHistory> paymentsHistoryList1) {
+        this.paymentsHistoryList1 = paymentsHistoryList1;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.clientID);
+        int hash = 0;
+        hash += (clientID != null ? clientID.hashCode() : 0);
         return hash;
     }
-
-    
 
     @Override
     public boolean equals(Object object) {
@@ -199,6 +232,7 @@ public class Client implements Serializable {
 
     @Override
     public String toString() {
-        return "Client{" + "clientID=" + clientID + ", nickName=" + nickName + ", firstName=" + firstName + ", lastName=" + lastName + ", phone=" + phone + ", email=" + email + '}';
+        return "model.Client[ clientID=" + clientID + " ]";
     }
+    
 }
