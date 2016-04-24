@@ -30,17 +30,13 @@ public class ClientDAO {
      * @return 
      */
     public Client getClientByEmail(String email) {
-        Client client = new Client();
-        System.out.println("user+++" + email);
         List<Client> resultList = em.createNamedQuery("Client.findByEmail")
                 .setParameter("email", email)
                 .getResultList();
         if (resultList.size()>0) {
-            client = resultList.get(0);
-            return client;
-        }
-        else {
-          return null;  
+            return resultList.get(0);
+        } else {
+            return null;  
         }
     }
     
@@ -51,9 +47,6 @@ public class ClientDAO {
      */
     public List<CreditCards> getAllCardsByClientID(int client_id) {
         Client find = em.find(Client.class, client_id);
-        
-        List<CreditCards>  list = find.getCreditCardsList();
-        
-        return list;
+        return find.getCreditCardsList();
     }
 }
