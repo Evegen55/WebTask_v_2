@@ -5,24 +5,34 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="language" 
+       value="${not empty param.language ? param.language 
+                                         : not empty language ? language 
+                                                              : pageContext.request.locale}" 
+       scope="session" />
+<fmt:setLocale value="${language}" />
+<fmt:setBundle basename="localization.locales" />
+
 <!DOCTYPE html>
-<html>
+<html lang="${language}">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" type="text/css">
-        <title>A Form login authentication failure occurred</title>
+        <title><fmt:message key='error.string1'/></title>
     </head>
     <body>
         <H1>
             <B>
-                A Form login authentication failure occurred
+                <fmt:message key='error.string1'/>
             </B>
         </H1>
         
-        <P>Authentication may fail for one of many reasons. Some possibilities include:
+        <P><fmt:message key='error.string2'/>
             <OL>
-                <LI>The user-id or password may be entered incorrectly; either misspelled or the wrong case was used.
-                    <LI>The user-id or password does not exist, has expired, or has been disabled.
+                <LI><fmt:message key='error.string3'/>
+                    <LI><fmt:message key='error.string4'/>
             </OL>
         </P>
     </body>
