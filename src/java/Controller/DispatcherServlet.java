@@ -46,6 +46,9 @@ public class DispatcherServlet extends HttpServlet {
             String destinationCards = "./AllCards";
             String destinationAccounts = "./AllAccounts";
             String destinationPaymentsHist = "./PaymentsHist";
+            
+            
+            
             String destinationBlockAccount = "./BlockAccount";
             String destinationAllBlockedAcc = "./AllBlockedAcc";
             //Paths
@@ -60,9 +63,10 @@ public class DispatcherServlet extends HttpServlet {
                 request.getRequestDispatcher(
                         response.encodeRedirectURL(destinationAccounts))
                         .forward(request, response);
-                //response.sendRedirect(response.encodeRedirectURL(destinationAccounts));
             } else if (operation.equalsIgnoreCase("payments")) {
-                response.sendRedirect(response.encodeRedirectURL(destinationPaymentsHist));
+                request.getRequestDispatcher(
+                        response.encodeRedirectURL(destinationPaymentsHist))
+                        .forward(request, response);
             } else if (operation.equalsIgnoreCase("add funds")) {
                 //logic for redirect to addfunds.jsp with accountID attribute
                 response.setContentType("text/html;charset=UTF-8");
