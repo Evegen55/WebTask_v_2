@@ -16,11 +16,8 @@
 package servlet;
 
 import DAO.ClientDAO;
-import DAO.PaymentsHistDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,6 +25,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Client;
+import model.PaymentsHistory;
 
 /**
  *
@@ -36,10 +34,6 @@ import model.Client;
 @WebServlet(name = "PaymentsHist", urlPatterns = {"/PaymentsHist"})
 public class PaymentsHist extends HttpServlet {
 
-    //@EJB
-    @Inject
-    private PaymentsHistDAO paymentsHistDAO;
-    
     //@EJB
     @Inject
     private ClientDAO clientDAO;
@@ -58,9 +52,9 @@ public class PaymentsHist extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         Client client = clientDAO.getClientByEmail(request.getRemoteUser());
-        int client_id = client.getClientID();
-        List list = paymentsHistDAO.getAllPaymetnsHistoryByClientID(client_id);
-        List listIncoming = paymentsHistDAO.getAllPaymetnsHistoryByBeneficiarID(client_id);
+        List<PaymentsHistory> list = clientDAO.getAllPaymetnsHistoryByClientID(client.getClientID());
+        List<PaymentsHistory> listIncoming = clientDAO.getAllPaymetnsHistoryByBeneficiarID(client.getClientID());
+        
         request.setAttribute("list", list);
         request.setAttribute("listIncoming", listIncoming);
         request.getRequestDispatcher("/simple_user_pages/payments_history.jsp").forward(request, response);
