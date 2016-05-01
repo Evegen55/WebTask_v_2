@@ -52,8 +52,8 @@ public class DispatcherServlet extends HttpServlet {
             String destinationBlockAccount = "./BlockAccount";
             String destinationAllBlockedAcc = "./AllBlockedAcc";
             //Paths
-            String destinationAddFunds_path = "/simpleuser/addfunds.jsp";
-            String destinationMakePayment_path = "/simpleuser/makepayment.jsp";
+            String destinationAddFunds_path = "/simple_user_pages/addfunds.jsp";
+            String destinationMakePayment_path = "/simple_user_pages/makepayment.jsp";
             
             if (operation.equalsIgnoreCase("my_cards")) {
                 request.getRequestDispatcher(
@@ -73,6 +73,7 @@ public class DispatcherServlet extends HttpServlet {
                 String accountID = request.getParameter("accountID");
                 request.setAttribute("accountID", accountID);
                 request.getRequestDispatcher(destinationAddFunds_path).forward(request, response);
+                
             } else if (operation.equalsIgnoreCase("make payment")) {
                 //logic for redirect to makepayment.jsp 
                 response.setContentType("text/html;charset=UTF-8");
