@@ -20,6 +20,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import model.BankAccount;
+import model.Client;
+import model.PaymentsHistory;
 
 /**
  *
@@ -45,6 +47,42 @@ public class AccountDAO {
             ba = (BankAccount) resultList.get(0);
         }
         return ba;
+    }
+
+    /**
+     * 
+     * @param bankAccount
+     * @param client
+     * @param amount 
+     */
+    public void addMoneyWithHistory(BankAccount bankAccount, Client client, double amount) {
+        addMoney(bankAccount);
+        writeHistory(bankAccount, bankAccount, client, client, amount);
+    }
+
+    private void addMoney(BankAccount bankAccount) {
+        BankAccount old_bankAccount = getAccountByID_asSingleAccount(bankAccount.getAccountID());
+        double old_amount = old_bankAccount.getCurrentBalance();
+        double new_amount = bankAccount.getCurrentBalance();
+        bankAccount.setCurrentBalance(old_amount+new_amount);
+        em.merge(bankAccount);
+    }
+
+    private void writeHistory(BankAccount bankAccountFrom, BankAccount bankAccountTo, Client clientFrom, Client clientTo, double amount) {
+        PaymentsHistory ph = new PaymentsHistory();
+        int paymentID = 0;
+        List resultList = em.createNamedQuery("PaymentsHistory.findAll").getResultList();
+        if (resultList.size()>0) {
+            PaymentsHistory phOld = (PaymentsHistory) resultList.get(resultList.size()-1);
+            paymentID = phOld.getPaymentID();
+        }
+        ph.setPaymentID(paymentID+1);
+        ph.setClientID(clientFrom);
+        ph.setClientAccountID(bankAccountFrom);
+        ph.setAmount(amount);
+        ph.setBeneficiarClienstID(clientTo);
+        ph.setBeneficiarAccountID(bankAccountTo);
+        em.persist(ph);
     }
 
 }
