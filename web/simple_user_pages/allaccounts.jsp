@@ -20,7 +20,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles2.css" type="text/css">
-        <title>All accounts</title>
+        <title><fmt:message key='user.allaccounts'/></title>
          
     </head>
     <body>
@@ -30,13 +30,14 @@
         
         
         <br />
-        <h3>My bank accounts</h3>
+        <h3><fmt:message key='user.allaccounts'/></h3>
         <br />
         
         <table border="1">
-            <th>Account number (id)</th>
-            <th>Balance</th>
-            <th>Status</th>
+            <th><fmt:message key='user.bank_account.number'/></th>
+            <th><fmt:message key='user.bank_account.balance'/></th>
+            <th><fmt:message key='user.bank_account.status'/></th>
+            
             <c:forEach items="${requestScope.allaccounts}" var="account">
                 <c:set var="accountID" value="${account.accountID}" />
                 <c:set var="currentBalance" value="${account.currentBalance}" />
