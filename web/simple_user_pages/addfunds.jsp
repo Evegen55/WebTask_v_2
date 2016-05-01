@@ -20,7 +20,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles3.css" type="text/css">
-        <title>JSP Page</title>
+        <title><fmt:message key='user.addfunds'/></title>
     </head>
     <body>
         <a href="${pageContext.request.contextPath}/Start" class='remember'><fmt:message key='nav.main'/></a>
@@ -28,13 +28,13 @@
         <a href="${pageContext.request.contextPath}/AllAccounts" class='remember'><fmt:message key='nav.allaccounts'/></a>
         
         <br />
-        <h3>Add money only to your account</h3>
+        <h3><fmt:message key='user.addfunds'/></h3>
         <br />
         <%-- getting ACCOUNT ID direct from account_info.jsp via DispatcherServlet --%>
         <form action="${pageContext.request.contextPath}/AddFunds?accountID=${requestScope.accountID}" method="POST">
             <table>
                 <tr>
-                    <td align="center">Amount:</td>
+                    <td align="center"><fmt:message key='user.payments.amount'/></td>
                     <td align="center"><input type="text" name="newBalance"/></td>
                 </tr>
                 <tr>
