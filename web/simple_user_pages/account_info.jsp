@@ -19,7 +19,7 @@
 <html lang="${language}">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles2.css" type="text/css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles1.css" type="text/css">
         <title><fmt:message key='user.single_account'/></title>
     </head>
     <body>
