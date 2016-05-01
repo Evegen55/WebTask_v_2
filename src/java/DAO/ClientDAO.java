@@ -12,6 +12,7 @@ import javax.persistence.PersistenceContext;
 import model.BankAccount;
 import model.Client;
 import model.CreditCards;
+import model.PaymentsHistory;
 
 /**
  *
@@ -57,5 +58,25 @@ public class ClientDAO {
     public List<BankAccount> getAllAccountsByClientID(int client_id) {
         Client find = em.find(Client.class, client_id);
         return find.getBankAccountList();
+    }
+    
+    /**
+     * 
+     * @param client_id
+     * @return 
+     */
+    public List<PaymentsHistory> getAllPaymetnsHistoryByClientID(int client_id) {
+        Client client = em.find(Client.class, client_id);
+        return client.getPaymentsHistoryList();
+    }
+
+    /**
+     * 
+     * @param client_id
+     * @return 
+     */
+    public List<PaymentsHistory> getAllPaymetnsHistoryByBeneficiarID(int client_id) {
+        Client client = em.find(Client.class, client_id);
+        return client.getPaymentsHistoryList1();
     }
 }
