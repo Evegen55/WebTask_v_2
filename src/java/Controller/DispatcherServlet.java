@@ -57,7 +57,10 @@ public class DispatcherServlet extends HttpServlet {
                         response.encodeRedirectURL(destinationCards))
                         .forward(request, response);
             } else if (operation.equalsIgnoreCase("my bank accounts")) {
-                response.sendRedirect(response.encodeRedirectURL(destinationAccounts));
+                request.getRequestDispatcher(
+                        response.encodeRedirectURL(destinationAccounts))
+                        .forward(request, response);
+                //response.sendRedirect(response.encodeRedirectURL(destinationAccounts));
             } else if (operation.equalsIgnoreCase("payments")) {
                 response.sendRedirect(response.encodeRedirectURL(destinationPaymentsHist));
             } else if (operation.equalsIgnoreCase("add funds")) {
