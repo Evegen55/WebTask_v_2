@@ -15,7 +15,11 @@
  */
 package DAO;
 
+import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import model.BankAccount;
 
 /**
  *
@@ -24,6 +28,23 @@ import javax.ejb.Stateless;
 @Stateless
 public class AccountDAO {
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    @PersistenceContext 
+    private EntityManager em;
+    
+    /**
+     * 
+     * @param ID_req_int
+     * @return 
+     */
+    public BankAccount getAccountByID_asSingleAccount(int ID_req_int) {
+        List resultList = em.createNamedQuery("BankAccount.findByAccountID")
+                .setParameter("accountID", ID_req_int)
+                .getResultList();
+        BankAccount ba = new BankAccount();
+        if (resultList.size()>0) {
+            ba = (BankAccount) resultList.get(0);
+        }
+        return ba;
+    }
+
 }
