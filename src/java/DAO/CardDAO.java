@@ -5,17 +5,37 @@
  */
 package DAO;
 
+import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import model.CreditCards;
 
 /**
  *
  * @author Evegen
  */
+@Stateless
 public class CardDAO {
     
     @PersistenceContext 
     private EntityManager em;
+
+    /**
+     * 
+     * @param ID_req_int
+     * @return 
+     */
+    public CreditCards getCardByID_asSingleCard(int ID_req_int) {
+        List resultList = em.createNamedQuery("CreditCards.findByCardID")
+                .setParameter("cardID", ID_req_int)
+                .getResultList();
+        CreditCards card = new CreditCards();
+        if (resultList.size()>0) {
+            card = (CreditCards) resultList.get(0);
+        }
+        return card;
+    }
     
     
 }
