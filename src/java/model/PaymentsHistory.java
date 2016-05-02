@@ -6,6 +6,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -66,6 +67,16 @@ public class PaymentsHistory implements Serializable {
         this.amount = amount;
     }
 
+    public PaymentsHistory(double amount, BankAccount clientAccountID, 
+            BankAccount beneficiarAccountID, Client clientID, Client beneficiarClienstID) {
+        this.amount = amount;
+        this.clientAccountID = clientAccountID;
+        this.beneficiarAccountID = beneficiarAccountID;
+        this.clientID = clientID;
+        this.beneficiarClienstID = beneficiarClienstID;
+    }
+
+    
     public Integer getPaymentID() {
         return paymentID;
     }
@@ -116,19 +127,39 @@ public class PaymentsHistory implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (paymentID != null ? paymentID.hashCode() : 0);
+        int hash = 5;
+        hash = 67 * hash + Objects.hashCode(this.paymentID);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PaymentsHistory)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        PaymentsHistory other = (PaymentsHistory) object;
-        if ((this.paymentID == null && other.paymentID != null) || (this.paymentID != null && !this.paymentID.equals(other.paymentID))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PaymentsHistory other = (PaymentsHistory) obj;
+        if (Double.doubleToLongBits(this.amount) != Double.doubleToLongBits(other.amount)) {
+            return false;
+        }
+        if (!Objects.equals(this.paymentID, other.paymentID)) {
+            return false;
+        }
+        if (!Objects.equals(this.clientAccountID, other.clientAccountID)) {
+            return false;
+        }
+        if (!Objects.equals(this.beneficiarAccountID, other.beneficiarAccountID)) {
+            return false;
+        }
+        if (!Objects.equals(this.clientID, other.clientID)) {
+            return false;
+        }
+        if (!Objects.equals(this.beneficiarClienstID, other.beneficiarClienstID)) {
             return false;
         }
         return true;
@@ -136,7 +167,11 @@ public class PaymentsHistory implements Serializable {
 
     @Override
     public String toString() {
-        return "model.PaymentsHistory[ paymentID=" + paymentID + " ]";
+        return "PaymentsHistory{" + "paymentID=" + paymentID + ", amount=" + amount 
+                + ", clientAccountID=" + clientAccountID + ", beneficiarAccountID=" 
+                + beneficiarAccountID + ", clientID=" + clientID + ", beneficiarClienstID=" 
+                + beneficiarClienstID + '}';
     }
+    
     
 }
