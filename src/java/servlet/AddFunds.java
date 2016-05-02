@@ -18,7 +18,7 @@ package servlet;
 import DAO.AccountDAO;
 import DAO.ClientDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -63,12 +63,12 @@ public class AddFunds extends HttpServlet {
         int accountID_as_int = Integer.parseInt(accountID);
         double currentBalance_as_double = Double.parseDouble(newBalance);
         
-        //create a new instance of BankAccount for using with EntityManager
-        BankAccount bankAccount = new BankAccount(accountID_as_int,currentBalance_as_double, false);
-        bankAccount.setClientID(client);
-        
         //getting prewious status
-        bankAccount.setStatus(accountDAO.getAccountByID_asSingleAccount(accountID_as_int).getStatus());
+        boolean prevStatus = accountDAO.getAccountByID_asSingleAccount(accountID_as_int).getStatus();
+        
+        //create a new instance of BankAccount for using with EntityManager
+        BankAccount bankAccount = new BankAccount(accountID_as_int,currentBalance_as_double, prevStatus);
+        bankAccount.setClientID(client);
         
         if (operation.equalsIgnoreCase("AddMoney")) {
             accountDAO.addMoneyWithHistory(bankAccount, client, currentBalance_as_double);

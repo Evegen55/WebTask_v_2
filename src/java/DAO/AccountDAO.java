@@ -66,10 +66,13 @@ public class AccountDAO {
         double new_amount = bankAccount.getCurrentBalance();
         bankAccount.setCurrentBalance(old_amount+new_amount);
         em.merge(bankAccount);
+        em.flush();
     }
 
     private void writeHistory(BankAccount bankAccountFrom, BankAccount bankAccountTo, Client clientFrom, Client clientTo, double amount) {
-        PaymentsHistory ph = new PaymentsHistory();
+        
+        PaymentsHistory ph = new PaymentsHistory(amount, bankAccountFrom, bankAccountTo, clientFrom, clientTo);
+        
         int paymentID = 0;
         List resultList = em.createNamedQuery("PaymentsHistory.findAll").getResultList();
         if (resultList.size()>0) {
@@ -77,12 +80,9 @@ public class AccountDAO {
             paymentID = phOld.getPaymentID();
         }
         ph.setPaymentID(paymentID+1);
-        ph.setClientID(clientFrom);
-        ph.setClientAccountID(bankAccountFrom);
-        ph.setAmount(amount);
-        ph.setBeneficiarClienstID(clientTo);
-        ph.setBeneficiarAccountID(bankAccountTo);
         em.persist(ph);
-    }
+        em.flush();
+        
+        }
 
 }
