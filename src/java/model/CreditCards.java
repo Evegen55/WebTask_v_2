@@ -7,6 +7,7 @@ package model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -142,19 +143,40 @@ public class CreditCards implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (cardID != null ? cardID.hashCode() : 0);
+        int hash = 3;
+        hash = 29 * hash + Objects.hashCode(this.cardID);
+        hash = 29 * hash + this.secureCode;
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CreditCards)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        CreditCards other = (CreditCards) object;
-        if ((this.cardID == null && other.cardID != null) || (this.cardID != null && !this.cardID.equals(other.cardID))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final CreditCards other = (CreditCards) obj;
+        if (this.secureCode != other.secureCode) {
+            return false;
+        }
+        if (!Objects.equals(this.pan, other.pan)) {
+            return false;
+        }
+        if (!Objects.equals(this.cardID, other.cardID)) {
+            return false;
+        }
+        if (!Objects.equals(this.validDate, other.validDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.accountID, other.accountID)) {
+            return false;
+        }
+        if (!Objects.equals(this.clientID, other.clientID)) {
             return false;
         }
         return true;
@@ -162,7 +184,11 @@ public class CreditCards implements Serializable {
 
     @Override
     public String toString() {
-        return "model.CreditCards[ cardID=" + cardID + " ]";
+        return "CreditCards{" + "cardID=" + cardID + ", pan=" + pan + ", secureCode=" 
+                + secureCode + ", validDate=" + validDate + ", status=" + status 
+                + ", accountID=" + accountID + ", clientID=" + clientID + '}';
     }
+
+    
     
 }
