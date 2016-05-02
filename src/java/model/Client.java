@@ -7,6 +7,7 @@ package model;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -99,7 +100,9 @@ public class Client implements Serializable {
         this.clientID = clientID;
     }
 
-    public Client(Integer clientID, String lastname, String firstname, String titleofcourtesy, String phone, String email, String password, String typeOfUser) {
+    public Client(Integer clientID, String lastname, String firstname, 
+            String titleofcourtesy, String phone, String email, 
+            String password, String typeOfUser) {
         this.clientID = clientID;
         this.lastname = lastname;
         this.firstname = firstname;
@@ -212,19 +215,30 @@ public class Client implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (clientID != null ? clientID.hashCode() : 0);
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.clientID);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Client)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Client other = (Client) object;
-        if ((this.clientID == null && other.clientID != null) || (this.clientID != null && !this.clientID.equals(other.clientID))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Client other = (Client) obj;
+        if (!Objects.equals(this.lastname, other.lastname)) {
+            return false;
+        }
+        if (!Objects.equals(this.firstname, other.firstname)) {
+            return false;
+        }
+        if (!Objects.equals(this.clientID, other.clientID)) {
             return false;
         }
         return true;
@@ -232,7 +246,14 @@ public class Client implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Client[ clientID=" + clientID + " ]";
+        return "Client{" + "clientID=" + clientID + ", lastname=" + lastname 
+                + ", firstname=" + firstname + ", titleofcourtesy=" + titleofcourtesy 
+                + ", phone=" + phone + ", email=" + email + ", password=" + password 
+                + ", typeOfUser=" + typeOfUser + ", bankAccountList=" + bankAccountList 
+                + ", creditCardsList=" + creditCardsList + ", paymentsHistoryList=" 
+                + paymentsHistoryList + ", paymentsHistoryList1=" + paymentsHistoryList1 + '}';
     }
+
+    
     
 }
