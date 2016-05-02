@@ -241,7 +241,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE paymentsHistory(
-	payment_ID int NOT NULL IDENTITY (1,1),
+	payment_ID int NOT NULL ,
 	client_ID int NOT NULL,
 	clientAccount_ID int NOT NULL,
 	amount float NOT NULL,
