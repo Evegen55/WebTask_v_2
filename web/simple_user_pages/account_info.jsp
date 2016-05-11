@@ -26,6 +26,7 @@
         <a href="${pageContext.request.contextPath}/Start" class='remember'><fmt:message key='nav.main'/></a>
         <a href="${pageContext.request.contextPath}/LogOut" class='remember'><fmt:message key='nav.logout'/></a>
         <a href="${pageContext.request.contextPath}/AllAccounts" class='remember'><fmt:message key='nav.allaccounts'/></a>
+        <a href="${pageContext.request.contextPath}/PaymentsHist" class='remember'><fmt:message key='nav.allpayments'/></a>
         
         <br />
         <h3><fmt:message key='user.single_account'/></h3>
