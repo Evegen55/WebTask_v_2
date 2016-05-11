@@ -41,17 +41,15 @@ public class DispatcherServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            //Servlets
+            //Servlets for simple users
             String operation = request.getParameter("operation");
             String destinationCards = "./AllCards";
             String destinationAccounts = "./AllAccounts";
             String destinationPaymentsHist = "./PaymentsHist";
             String destinationBlockAccount = "./BlockAccount";
-            
+            //Servlets for admin
             String destinationAllBlockedAcc = "./AllBlockedAcc";
-            
-            
-            //Paths
+            //Paths for simple users
             String destinationAddFunds_path = "/simple_user_pages/addfunds.jsp";
             String destinationMakePayment_path = "/simple_user_pages/makepayment.jsp";
             
@@ -80,22 +78,19 @@ public class DispatcherServlet extends HttpServlet {
                 request.getRequestDispatcher(
                         response.encodeRedirectURL(destinationBlockAccount))
                         .forward(request, response);
-                //response.sendRedirect(response.encodeRedirectURL(destinationBlockAccount + "?accountID=" + accountID));
-            
-            
-            
-            
-            
-            
-            
-            
-            
             } else if (operation.equalsIgnoreCase("make payment")) {
                 //logic for redirect to makepayment.jsp 
                 response.setContentType("text/html;charset=UTF-8");
                 String accountID = request.getParameter("accountID");
                 request.setAttribute("accountID", accountID);
                 request.getRequestDispatcher(destinationMakePayment_path).forward(request, response);
+            
+            
+            
+            
+            
+            
+            
             } else if (operation.equalsIgnoreCase("all blocked accounts")) {
                 response.sendRedirect(response.encodeRedirectURL(destinationAllBlockedAcc));
             } else {
