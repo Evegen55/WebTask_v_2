@@ -85,4 +85,15 @@ public class AccountDAO {
         
         }
 
+    /**
+     * 
+     * @param accountID_as_int 
+     */
+    public void setBlockToAcount(int accountID_as_int) {
+        BankAccount bankAccountOld = getAccountByID_asSingleAccount(accountID_as_int);
+        bankAccountOld.setStatus(true);
+        em.merge(bankAccountOld);
+        em.flush();
+    }
+
 }
