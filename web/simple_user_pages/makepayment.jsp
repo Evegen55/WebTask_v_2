@@ -19,7 +19,7 @@
 <html lang="${language}">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles1.css" type="text/css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles3.css" type="text/css">
         <title><fmt:message key='user.make_payments'/></title>
     </head>
     <body>
@@ -27,5 +27,34 @@
         <a href="${pageContext.request.contextPath}/LogOut" class='remember'><fmt:message key='nav.logout'/></a>
         <a href="${pageContext.request.contextPath}/AllAccounts" class='remember'><fmt:message key='nav.allaccounts'/></a>
         <a href="${pageContext.request.contextPath}/PaymentsHist" class='remember'><fmt:message key='nav.allpayments'/></a>
+        
+        <br />
+        <h3><fmt:message key='user.make_payments'/></h3>
+        <br />
+        <form action="${pageContext.request.contextPath}/MakePayment?accountID=${requestScope.accountID}" method="POST">
+            <table>
+                <tr>
+                    <td><fmt:message key='user.payments.amount'/>:</td>
+                    <td><input type="text" name="payment"/></td>
+                </tr>
+                <tr>
+                    <td><fmt:message key='user.payments.to'/>:</td>
+                    <td><input type="text" name="beneficiarAccountID"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                    <input type="Submit" name="operation" value="Make a pay" />
+                    </td>
+                </tr>                
+            </table>
+                    
+                    проверить есть ли в запросе атрибут block_acc если есть значит 
+                    счет бенефициара заблокирован.
+                    так же осудествить проверку на корректность вводимых цифр (а не букв)
+                    
+        </form>
+    
+    
+    
     </body>
 </html>
