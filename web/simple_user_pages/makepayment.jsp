@@ -28,33 +28,35 @@
         <a href="${pageContext.request.contextPath}/AllAccounts" class='remember'><fmt:message key='nav.allaccounts'/></a>
         <a href="${pageContext.request.contextPath}/PaymentsHist" class='remember'><fmt:message key='nav.allpayments'/></a>
         
-        <br />
-        <h3><fmt:message key='user.make_payments'/></h3>
-        <br />
-        <form action="${pageContext.request.contextPath}/MakePayment?accountID=${requestScope.accountID}" method="POST">
-            <table>
-                <tr>
-                    <td><fmt:message key='user.payments.amount'/>:</td>
-                    <td><input type="text" name="payment"/></td>
-                </tr>
-                <tr>
-                    <td><fmt:message key='user.payments.to'/>:</td>
-                    <td><input type="text" name="beneficiarAccountID"/></td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                    <input type="Submit" name="operation" value="Make a pay" />
-                    </td>
-                </tr>                
-            </table>
-                    
-                    проверить есть ли в запросе атрибут block_acc если есть значит 
-                    счет бенефициара заблокирован.
-                    так же осудествить проверку на корректность вводимых цифр (а не букв)
-                    
-        </form>
-    
-    
-    
+        <c:choose>
+            <c:when test="${not empty pageContext.request.getAttribute(block_acc)}">
+                <br />
+                <h3><fmt:message key='user.payments.try_to_block_account'/></h3>
+                <br />
+            </c:when>
+            <c:otherwise>
+                <br />
+                    <h3><fmt:message key='user.make_payments'/></h3>
+                <br />
+            </c:otherwise>
+        </c:choose>
+        <form action="${pageContext.request.contextPath}/MakePayment?accountID=${requestScope.accountID}" 
+                      method="POST">
+                <table>
+                    <tr>
+                        <td><fmt:message key='user.payments.amount'/>:</td>
+                        <td><input type="text" name="payment"/></td>
+                    </tr>
+                    <tr>
+                        <td><fmt:message key='user.payments.to'/>:</td>
+                        <td><input type="text" name="beneficiarAccountID"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                        <input type="Submit" name="operation" value="Make a pay" />
+                        </td>
+                    </tr>                
+                </table>
+                </form>
     </body>
 </html>
