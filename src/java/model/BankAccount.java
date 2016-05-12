@@ -74,6 +74,13 @@ public class BankAccount implements Serializable {
         this.status = status;
     }
 
+    public BankAccount(Integer accountID, double currentBalance, boolean status, Client clientID) {
+        this.accountID = accountID;
+        this.currentBalance = currentBalance;
+        this.status = status;
+        this.clientID = clientID;
+    }
+    
     public Integer getAccountID() {
         return accountID;
     }
