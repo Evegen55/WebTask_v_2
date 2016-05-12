@@ -67,8 +67,7 @@ public class AddFunds extends HttpServlet {
         boolean prevStatus = accountDAO.getAccountByID_asSingleAccount(accountID_as_int).getStatus();
         
         //create a new instance of BankAccount for using with EntityManager
-        BankAccount bankAccount = new BankAccount(accountID_as_int,currentBalance_as_double, prevStatus);
-        bankAccount.setClientID(client);
+        BankAccount bankAccount = new BankAccount(accountID_as_int,currentBalance_as_double, prevStatus, client);
         
         if (operation.equalsIgnoreCase("AddMoney")) {
             accountDAO.addMoneyWithHistory(bankAccount, client, currentBalance_as_double);
