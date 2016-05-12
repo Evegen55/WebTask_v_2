@@ -96,4 +96,27 @@ public class AccountDAO {
         em.flush();
     }
 
+    /**
+     * 
+     * @param bankAccountFrom
+     * @param bankAccountTo
+     * @param client
+     * @param beneficiar
+     * @param amount 
+     */
+    public void makePay(BankAccount bankAccountFrom, BankAccount bankAccountTo, Client client, Client beneficiar, double amount) {
+        substractionMoney(bankAccountFrom);
+        addMoney(bankAccountTo);
+        writeHistory(bankAccountFrom, bankAccountTo, client, beneficiar, amount);
+    }
+
+    private void substractionMoney(BankAccount bankAccount) {
+        BankAccount old_bankAccount = getAccountByID_asSingleAccount(bankAccount.getAccountID());
+        double old_amount = old_bankAccount.getCurrentBalance();
+        double new_amount = bankAccount.getCurrentBalance();
+        bankAccount.setCurrentBalance(old_amount-new_amount);
+        em.merge(bankAccount);
+        em.flush();
+    }
+
 }
