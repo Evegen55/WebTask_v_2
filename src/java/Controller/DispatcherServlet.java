@@ -70,7 +70,8 @@ public class DispatcherServlet extends HttpServlet {
                 response.setContentType("text/html;charset=UTF-8");
                 String accountID = request.getParameter("accountID");
                 request.setAttribute("accountID", accountID);
-                request.getRequestDispatcher(destinationAddFunds_path).forward(request, response);
+                request.getRequestDispatcher(destinationAddFunds_path)
+                        .forward(request, response);
             } else if (operation.equalsIgnoreCase("block account")) {
                 //logic fo invoke servlet with parameters
                 String accountID = request.getParameter("accountID");
@@ -84,17 +85,12 @@ public class DispatcherServlet extends HttpServlet {
                 String accountID = request.getParameter("accountID");
                 request.setAttribute("accountID", accountID);
                 request.getRequestDispatcher(destinationMakePayment_path).forward(request, response);
-            
-            
-            
-            
-            
-            
-            
             } else if (operation.equalsIgnoreCase("all blocked accounts")) {
-                response.sendRedirect(response.encodeRedirectURL(destinationAllBlockedAcc));
-            } else {
                 response.setContentType("text/html;charset=UTF-8");
+                request.getRequestDispatcher(destinationAllBlockedAcc)
+                        .forward(request, response);
+            } else {
+                System.out.println("Error occure logic of DispatcherServlet");
             }
         } catch (IOException | ServletException iOException) {
             System.out.println("Error occure DispatcherServlet" + "\t" + iOException);
