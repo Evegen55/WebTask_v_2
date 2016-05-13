@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.BankAccount;
 import model.Client;
+import util.CheckNumeric;
 
 /**
  *
@@ -61,31 +62,41 @@ public class MakePayment extends HttpServlet {
         //parse input parameters if it need
         int accountID_as_int = Integer.parseInt(accountID);
         int beneficiarAccountID_as_int = Integer.parseInt(beneficiarAccountID);
-        double payment_as_double = Double.parseDouble(payment);
         
-        //find entities
-        Client client = clientDAO.getClientByEmail(request.getRemoteUser());
-        BankAccount bankAccountClient = accountDAO.getAccountByID_asSingleAccount(accountID_as_int);
-        BankAccount bankAccountBeneficiar = accountDAO.getAccountByID_asSingleAccount(beneficiarAccountID_as_int);
-        Client beneficiar = bankAccountBeneficiar.getClientID();
-        
-        //getting prewious status of client's account
-        boolean prevStatusClient = bankAccountClient.getStatus();
-        boolean prevStatusBeneficiar = bankAccountBeneficiar.getStatus();
-        
-        //create a new instance of BankAccount for using with EntityManager
-        BankAccount bankAccountClNew = new BankAccount(accountID_as_int,payment_as_double, prevStatusClient, client);
-        BankAccount bankAccountBenNew = new BankAccount(beneficiarAccountID_as_int,payment_as_double, 
-                prevStatusBeneficiar, beneficiar);
-        
-        //business logic
-        if (operation.equalsIgnoreCase("Make a pay") && prevStatusBeneficiar == false) {
-            accountDAO.makePay(bankAccountClNew, bankAccountBenNew, client, beneficiar, payment_as_double);
+        if (CheckNumeric.isDoubleOrFloat(payment)) {
+            double payment_as_double = Double.parseDouble(payment);
+
+            //find entities
+            Client client = clientDAO.getClientByEmail(request.getRemoteUser());
+            BankAccount bankAccountClient = accountDAO.getAccountByID_asSingleAccount(accountID_as_int);
+            BankAccount bankAccountBeneficiar = accountDAO.getAccountByID_asSingleAccount(beneficiarAccountID_as_int);
+            Client beneficiar = bankAccountBeneficiar.getClientID();
+
+            //getting prewious status of client's account
+            boolean prevStatusClient = bankAccountClient.getStatus();
+            boolean prevStatusBeneficiar = bankAccountBeneficiar.getStatus();
+
+            //create a new instance of BankAccount for using with EntityManager
+            BankAccount bankAccountClNew = new BankAccount(accountID_as_int,payment_as_double, prevStatusClient, client);
+            BankAccount bankAccountBenNew = new BankAccount(beneficiarAccountID_as_int,payment_as_double, 
+                    prevStatusBeneficiar, beneficiar);
+
+            //business logic
+            if (operation.equalsIgnoreCase("Make a pay") && prevStatusBeneficiar == false) {
+                accountDAO.makePay(bankAccountClNew, bankAccountBenNew, client, beneficiar, payment_as_double);
+            } else {
+                request.setAttribute("block_acc", "block_acc");
+            }
+            //logic for redirect back to makepayment.jsp 
+            request.getRequestDispatcher("/simple_user_pages/makepayment.jsp").forward(request, response);
         } else {
-            request.setAttribute("block_acc", "block_acc");
+            String flag = "not_digits";
+            request.setAttribute("flag", flag);
+            //logic for redirect back to addfunds.jsp with massage about trying 
+            //add text instead balance 
+            request.getRequestDispatcher("/simple_user_pages/makepayment.jsp").forward(request, response);
         }
-        //logic for redirect back to makepayment.jsp 
-        request.getRequestDispatcher("/simple_user_pages/makepayment.jsp").forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
