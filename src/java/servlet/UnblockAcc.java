@@ -15,8 +15,10 @@
  */
 package servlet;
 
+import DAO.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,6 +32,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "UnblockAcc", urlPatterns = {"/UnblockAcc"})
 public class UnblockAcc extends HttpServlet {
 
+    //@EJB
+    @Inject
+    private AccountDAO accountDAO;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,19 +47,15 @@ public class UnblockAcc extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet UnblockAcc</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet UnblockAcc at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        String accountID = request.getParameter("accountID");
+        int accountID_as_int = Integer.parseInt(accountID);
+        //unblocking account
+        accountDAO.setUnblockToAcount(accountID_as_int);
+        //logic for redirect back to account_info.jsp via envoke another servlet
+        request.getRequestDispatcher(
+                        response.encodeRedirectURL("./AllBlockedAcc"))
+                        .forward(request, response);
         }
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -68,7 +69,7 @@ public class UnblockAcc extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        doPost(request, response);
     }
 
     /**
