@@ -133,4 +133,15 @@ public class AccountDAO {
         return resultList;
     }
 
+    /**
+     * 
+     * @param accountID_as_int 
+     */
+    public void setUnblockToAcount(int accountID_as_int) {
+        BankAccount bankAccountOld = getAccountByID_asSingleAccount(accountID_as_int);
+        bankAccountOld.setStatus(false);
+        em.merge(bankAccountOld);
+        em.flush();
+    }
+
 }
