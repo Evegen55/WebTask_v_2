@@ -40,7 +40,6 @@ public class DispatcherServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
             //Servlets for simple users
             String operation = request.getParameter("operation");
             String destinationCards = "./AllCards";
@@ -52,7 +51,7 @@ public class DispatcherServlet extends HttpServlet {
             //Paths for simple users
             String destinationAddFunds_path = "/simple_user_pages/addfunds.jsp";
             String destinationMakePayment_path = "/simple_user_pages/makepayment.jsp";
-            
+        try {
             if (operation.equalsIgnoreCase("my_cards")) {
                 request.getRequestDispatcher(
                         response.encodeRedirectURL(destinationCards))
@@ -87,7 +86,8 @@ public class DispatcherServlet extends HttpServlet {
                 request.getRequestDispatcher(destinationMakePayment_path).forward(request, response);
             } else if (operation.equalsIgnoreCase("all blocked accounts")) {
                 response.setContentType("text/html;charset=UTF-8");
-                request.getRequestDispatcher(destinationAllBlockedAcc)
+                request.getRequestDispatcher(
+                        response.encodeRedirectURL(destinationAllBlockedAcc))
                         .forward(request, response);
             } else {
                 System.out.println("Error occure logic of DispatcherServlet");
