@@ -46,6 +46,7 @@ public class AccountDAO {
         if (resultList.size()>0) {
             ba = (BankAccount) resultList.get(0);
         }
+        em.flush();
         return ba;
     }
 
@@ -117,6 +118,19 @@ public class AccountDAO {
         bankAccount.setCurrentBalance(old_amount-new_amount);
         em.merge(bankAccount);
         em.flush();
+    }
+
+    /**
+     * 
+     * @param status
+     * @return 
+     */
+    public List getAllAccountsByStatus(boolean status) {
+        List resultList = em.createNamedQuery("BankAccount.findByStatus")
+                .setParameter("status", status)
+                .getResultList();
+        em.flush();
+        return resultList;
     }
 
 }
