@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.BankAccount;
 import model.Client;
+import util.CheckNumeric;
 
 /**
  *
@@ -61,19 +62,30 @@ public class AddFunds extends HttpServlet {
         
         Client client = clientDAO.getClientByEmail(request.getRemoteUser());
         int accountID_as_int = Integer.parseInt(accountID);
-        double currentBalance_as_double = Double.parseDouble(newBalance);
         
-        //getting prewious status
-        boolean prevStatus = accountDAO.getAccountByID_asSingleAccount(accountID_as_int).getStatus();
+        if (CheckNumeric.isDoubleOrFloat(newBalance)) {
+            double currentBalance_as_double = Double.parseDouble(newBalance);
+            //getting prewious status
+            boolean prevStatus = accountDAO.getAccountByID_asSingleAccount(accountID_as_int).getStatus();
         
-        //create a new instance of BankAccount for using with EntityManager
-        BankAccount bankAccount = new BankAccount(accountID_as_int,currentBalance_as_double, prevStatus, client);
+            //create a new instance of BankAccount for using with EntityManager
+            BankAccount bankAccount = new BankAccount(accountID_as_int,currentBalance_as_double, prevStatus, client);
         
-        if (operation.equalsIgnoreCase("AddMoney")) {
-            accountDAO.addMoneyWithHistory(bankAccount, client, currentBalance_as_double);
+            if (operation.equalsIgnoreCase("AddMoney")) {
+                accountDAO.addMoneyWithHistory(bankAccount, client, currentBalance_as_double);
+            }
+            //logic for redirect back to addfunds.jsp 
+            request.getRequestDispatcher("/simple_user_pages/addfunds.jsp").forward(request, response);
+        } else {
+            String flag = "not_digits";
+            request.setAttribute("flag", flag);
+            //logic for redirect back to addfunds.jsp with massage about trying 
+            //add text instead balance 
+            request.getRequestDispatcher("/simple_user_pages/addfunds.jsp").forward(request, response);
         }
-        //logic for redirect back to addfunds.jsp 
-        request.getRequestDispatcher("/simple_user_pages/addfunds.jsp").forward(request, response);
+        
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
