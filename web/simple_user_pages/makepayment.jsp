@@ -34,6 +34,11 @@
                 <h3><fmt:message key='user.payments.try_to_block_account'/></h3>
                 <br />
             </c:when>
+            <c:when test="${not empty pageContext.request.getAttribute(flag)}">
+                <br />
+                <h3><fmt:message key='user.payments.try_to_pay_text'/></h3>
+                <br />
+            </c:when>
             <c:otherwise>
                 <br />
                     <h3><fmt:message key='user.make_payments'/></h3>
