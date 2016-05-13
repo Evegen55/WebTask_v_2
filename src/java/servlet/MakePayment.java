@@ -18,7 +18,6 @@ package servlet;
 import DAO.AccountDAO;
 import DAO.ClientDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -90,8 +89,7 @@ public class MakePayment extends HttpServlet {
             //logic for redirect back to makepayment.jsp 
             request.getRequestDispatcher("/simple_user_pages/makepayment.jsp").forward(request, response);
         } else {
-            String flag = "not_digits";
-            request.setAttribute("flag", flag);
+            request.setAttribute("flag", "flag");
             //logic for redirect back to addfunds.jsp with massage about trying 
             //add text instead balance 
             request.getRequestDispatcher("/simple_user_pages/makepayment.jsp").forward(request, response);
