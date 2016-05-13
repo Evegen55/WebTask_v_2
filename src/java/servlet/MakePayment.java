@@ -62,38 +62,46 @@ public class MakePayment extends HttpServlet {
         int accountID_as_int = Integer.parseInt(accountID);
         int beneficiarAccountID_as_int = Integer.parseInt(beneficiarAccountID);
         
-        if (CheckNumeric.isDoubleOrFloat(payment)) {
-            double payment_as_double = Double.parseDouble(payment);
+        //check if accountID and beneficiarAccountID is not quals
+        if (accountID_as_int != beneficiarAccountID_as_int) {
+            //check if payment is double
+            if (CheckNumeric.isDoubleOrFloat(payment)) {
+                double payment_as_double = Double.parseDouble(payment);
 
-            //find entities
-            Client client = clientDAO.getClientByEmail(request.getRemoteUser());
-            BankAccount bankAccountClient = accountDAO.getAccountByID_asSingleAccount(accountID_as_int);
-            BankAccount bankAccountBeneficiar = accountDAO.getAccountByID_asSingleAccount(beneficiarAccountID_as_int);
-            Client beneficiar = bankAccountBeneficiar.getClientID();
+                //find entities
+                Client client = clientDAO.getClientByEmail(request.getRemoteUser());
+                BankAccount bankAccountClient = accountDAO.getAccountByID_asSingleAccount(accountID_as_int);
+                BankAccount bankAccountBeneficiar = accountDAO.getAccountByID_asSingleAccount(beneficiarAccountID_as_int);
+                Client beneficiar = bankAccountBeneficiar.getClientID();
 
-            //getting prewious status of client's account
-            boolean prevStatusClient = bankAccountClient.getStatus();
-            boolean prevStatusBeneficiar = bankAccountBeneficiar.getStatus();
+                //getting prewious status of client's account
+                boolean prevStatusClient = bankAccountClient.getStatus();
+                boolean prevStatusBeneficiar = bankAccountBeneficiar.getStatus();
 
-            //create a new instance of BankAccount for using with EntityManager
-            BankAccount bankAccountClNew = new BankAccount(accountID_as_int,payment_as_double, prevStatusClient, client);
-            BankAccount bankAccountBenNew = new BankAccount(beneficiarAccountID_as_int,payment_as_double, 
-                    prevStatusBeneficiar, beneficiar);
+                //create a new instance of BankAccount for using with EntityManager
+                BankAccount bankAccountClNew = new BankAccount(accountID_as_int,payment_as_double, prevStatusClient, client);
+                BankAccount bankAccountBenNew = new BankAccount(beneficiarAccountID_as_int,payment_as_double, 
+                        prevStatusBeneficiar, beneficiar);
 
-            //business logic
-            if (operation.equalsIgnoreCase("Make a pay") && prevStatusBeneficiar == false) {
-                accountDAO.makePay(bankAccountClNew, bankAccountBenNew, client, beneficiar, payment_as_double);
+                //business logic
+                if (operation.equalsIgnoreCase("Make a pay") && prevStatusBeneficiar == false) {
+                    accountDAO.makePay(bankAccountClNew, bankAccountBenNew, client, beneficiar, payment_as_double);
+                } else {
+                    request.setAttribute("block_acc", "block_acc");
+                }
+                //logic for redirect back to makepayment.jsp 
+                request.getRequestDispatcher("/simple_user_pages/makepayment.jsp").forward(request, response);
             } else {
-                request.setAttribute("block_acc", "block_acc");
+                request.setAttribute("flag", "flag");
+                //logic for redirect back to addfunds.jsp with massage about trying 
+                //add text instead balance 
+                request.getRequestDispatcher("/simple_user_pages/makepayment.jsp").forward(request, response);
             }
-            //logic for redirect back to makepayment.jsp 
-            request.getRequestDispatcher("/simple_user_pages/makepayment.jsp").forward(request, response);
         } else {
-            request.setAttribute("flag", "flag");
-            //logic for redirect back to addfunds.jsp with massage about trying 
-            //add text instead balance 
+            request.setAttribute("flagAddFunds", "flagAddFunds");
             request.getRequestDispatcher("/simple_user_pages/makepayment.jsp").forward(request, response);
         }
+        
         
     }
 
