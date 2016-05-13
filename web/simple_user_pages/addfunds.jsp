@@ -27,9 +27,20 @@
         <a href="${pageContext.request.contextPath}/LogOut" class='remember'><fmt:message key='nav.logout'/></a>
         <a href="${pageContext.request.contextPath}/AllAccounts" class='remember'><fmt:message key='nav.allaccounts'/></a>
         
-        <br />
-        <h3><fmt:message key='user.addfunds'/></h3>
-        <br />
+        <c:choose>
+            <c:when test="${not empty pageContext.request.getAttribute(flag)}">
+                <br />
+                <h3><fmt:message key='user.payments.try_to_pay_text'/></h3>
+                <br />
+            </c:when>
+            <c:otherwise>
+                <br />
+                    <h3><fmt:message key='user.addfunds'/></h3>
+                <br />
+            </c:otherwise>
+        </c:choose>
+        
+        
         <%-- getting ACCOUNT ID direct from account_info.jsp via DispatcherServlet --%>
         <form action="${pageContext.request.contextPath}/AddFunds?accountID=${requestScope.accountID}" method="POST">
             <table>
