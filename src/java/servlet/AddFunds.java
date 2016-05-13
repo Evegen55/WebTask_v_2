@@ -77,8 +77,7 @@ public class AddFunds extends HttpServlet {
             //logic for redirect back to addfunds.jsp 
             request.getRequestDispatcher("/simple_user_pages/addfunds.jsp").forward(request, response);
         } else {
-            String flag = "not_digits";
-            request.setAttribute("flag", flag);
+            request.setAttribute("flag", "flag");
             //logic for redirect back to addfunds.jsp with massage about trying 
             //add text instead balance 
             request.getRequestDispatcher("/simple_user_pages/addfunds.jsp").forward(request, response);
