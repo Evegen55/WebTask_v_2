@@ -14,6 +14,9 @@
     </head>
     <body>
         <c:choose>
+            <c:when test="${not empty pageContext.request.getAttribute(flag)}">
+                <c:redirect url="login.jsp" />
+            </c:when>
             <c:when test="${not empty pageContext.request.userPrincipal}">
                 <c:redirect url="DispatherAccounts" />
             </c:when>
