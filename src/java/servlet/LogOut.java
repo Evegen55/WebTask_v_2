@@ -43,6 +43,7 @@ public class LogOut extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.getSession(false).invalidate();
+        request.setAttribute("flag", "flag");
         //request.getRequestDispatcher("/login.jsp").forward(request, response);
         request.getRequestDispatcher("/pages_for_all_users/start.jsp").forward(request, response);
     }
