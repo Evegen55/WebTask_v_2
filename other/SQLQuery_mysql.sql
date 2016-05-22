@@ -93,24 +93,18 @@ will be created as sql-dump from first database
 ******/
 
 /****** Object:  Table [bankAccount]    Script Date: 16.04.2016 23:53:05 ******/
+
 CREATE TABLE bankAccount(
-	account_ID int NOT NULL AUTO_INCREMENT,
+	account_ID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	client_ID int NOT NULL,
 	currentBalance float NOT NULL,
-	status [bit] NOT NULL,
- CONSTRAINT [PK_bankAccount] PRIMARY KEY CLUSTERED 
-(
-	account_ID ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
+	status BOOL NOT NULL
+);
 
 ALTER TABLE bankAccount
 ADD  CONSTRAINT FK_bankAccount_client 
 FOREIGN KEY(client_ID)
-REFERENCES client (client_ID)
-GO
+REFERENCES client (client_ID);
 
 INSERT INTO bankAccount (client_ID,currentBalance, status)
 VALUES
@@ -139,38 +133,25 @@ VALUES
 
 
 /****** Object:  Table creditCards    Script Date: 17.04.2016 0:32:23 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
 
 CREATE TABLE creditCards(
-	card_ID int NOT NULL IDENTITY (1,1),
+	card_ID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	account_ID int NOT NULL,
 	client_ID int NOT NULL,
 	PAN nchar(16) NOT NULL,
 	secureCode int NOT NULL,
 	validDate date NOT NULL,
-	[status] bit NOT NULL,
- CONSTRAINT [PK_creditCards] PRIMARY KEY CLUSTERED 
-(
-	card_ID ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
+	status BOOL NOT NULL
+);
 
 ALTER TABLE creditCards
 ADD  CONSTRAINT FK_creditCards_bankAccount
 FOREIGN KEY(account_ID)
-REFERENCES bankAccount (account_ID)
-GO
+REFERENCES bankAccount (account_ID);
 
 ALTER TABLE creditCards
 ADD  CONSTRAINT FK_creditCards_client FOREIGN KEY(client_ID)
-REFERENCES client (client_ID)
-GO
+REFERENCES client (client_ID);
 
 INSERT INTO creditCards (account_ID, client_ID, PAN, secureCode, validDate, status)
 VALUES
@@ -194,50 +175,32 @@ VALUES
   (18, 8, 5689479905639878, 3938, '2017-01-01', 0),
   (19, 9, 5689479905639879, 3939, '2017-01-01', 0),
   (20, 10, 5689479905639870, 3930, '2017-01-01', 0);
-
-
 /****** Object:  Table [dbo].[paymentsHistory]    Script Date: 17.04.2016 1:15:31 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-CREATE TABLE paymentsHistory(
-	payment_ID int NOT NULL ,
+CREATE TABLE paymentsHistory (
+	payment_ID int NOT NULL PRIMARY KEY,
 	client_ID int NOT NULL,
 	clientAccount_ID int NOT NULL,
 	amount float NOT NULL,
 	beneficiarClienst_ID int NOT NULL,
-	beneficiarAccount_ID int NOT NULL,
- CONSTRAINT [PK_paymentsHistory] PRIMARY KEY CLUSTERED 
-(
-	payment_ID ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
+	beneficiarAccount_ID int NOT NULL
+);
 
 ALTER TABLE paymentsHistory
 ADD  CONSTRAINT FK_paymentsHistory_bankAccount
 FOREIGN KEY(clientAccount_ID)
-REFERENCES bankAccount (account_ID)
-GO
+REFERENCES bankAccount (account_ID);
 
 ALTER TABLE paymentsHistory
 ADD  CONSTRAINT FK_paymentsHistory_bankAccount1
 FOREIGN KEY(beneficiarAccount_ID)
-REFERENCES bankAccount ([account_ID])
-GO
+REFERENCES bankAccount (account_ID);
 
 ALTER TABLE paymentsHistory 
 ADD  CONSTRAINT FK_paymentsHistory_client 
 FOREIGN KEY(client_ID)
-REFERENCES client (client_ID)
-GO
+REFERENCES client (client_ID);
 
 ALTER TABLE paymentsHistory
 ADD  CONSTRAINT FK_paymentsHistory_client1
 FOREIGN KEY(beneficiarClienst_ID)
-REFERENCES client (client_ID)
-GO
+REFERENCES client (client_ID);
