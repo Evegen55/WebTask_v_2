@@ -32,6 +32,7 @@ public class EJBLoggerAOPExample {
     public Object logMethodEntry(InvocationContext invocationContext) throws Exception{
         //System.out.println("Entering method:" + invocationContext.getMethod().getName());
         log.info("Entering method:" + invocationContext.getMethod().getName());
+        log.info("Entering paramethers:" + invocationContext.getParameters() + " " + invocationContext.getTimer());
         return invocationContext.proceed();
     }
 }
