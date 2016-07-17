@@ -48,6 +48,7 @@ public class ClientDAO {
      * @param client_id
      * @return 
      */
+    @Interceptors(EJBLoggerAOPExample.class)
     public List<CreditCards> getAllCardsByClientID(int client_id) {
         Client find = em.find(Client.class, client_id);
         return find.getCreditCardsList();
@@ -58,6 +59,7 @@ public class ClientDAO {
      * @param client_id
      * @return 
      */
+    @Interceptors(EJBLoggerAOPExample.class)
     public List<BankAccount> getAllAccountsByClientID(int client_id) {
         Client find = em.find(Client.class, client_id);
         return find.getBankAccountList();
@@ -68,6 +70,7 @@ public class ClientDAO {
      * @param client_id
      * @return 
      */
+    @Interceptors(EJBLoggerAOPExample.class)
     public List<PaymentsHistory> getAllPaymetnsHistoryByClientID(int client_id) {
         Client client = em.find(Client.class, client_id);
         return client.getPaymentsHistoryList();
@@ -78,6 +81,7 @@ public class ClientDAO {
      * @param client_id
      * @return 
      */
+    @Interceptors(EJBLoggerAOPExample.class)
     public List<PaymentsHistory> getAllPaymetnsHistoryByBeneficiarID(int client_id) {
         Client client = em.find(Client.class, client_id);
         return client.getPaymentsHistoryList1();

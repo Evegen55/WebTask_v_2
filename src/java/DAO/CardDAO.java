@@ -7,9 +7,11 @@ package DAO;
 
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import model.CreditCards;
+import util.EJBLoggerAOPExample;
 
 /**
  *
@@ -26,6 +28,7 @@ public class CardDAO {
      * @param ID_req_int
      * @return 
      */
+    @Interceptors(EJBLoggerAOPExample.class)
     public CreditCards getCardByID_asSingleCard(int ID_req_int) {
         List resultList = em.createNamedQuery("CreditCards.findByCardID")
                 .setParameter("cardID", ID_req_int)
