@@ -7,12 +7,14 @@ package DAO;
 
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import model.BankAccount;
 import model.Client;
 import model.CreditCards;
 import model.PaymentsHistory;
+import util.EJBLoggerAOPExample;
 
 /**
  *
@@ -29,6 +31,7 @@ public class ClientDAO {
      * @param email
      * @return 
      */
+    @Interceptors(EJBLoggerAOPExample.class)
     public Client getClientByEmail(String email) {
         List<Client> resultList = em.createNamedQuery("Client.findByEmail")
                 .setParameter("email", email)
