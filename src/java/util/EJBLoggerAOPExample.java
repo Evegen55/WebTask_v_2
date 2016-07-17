@@ -17,6 +17,8 @@ package util;
 
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  *
@@ -24,9 +26,12 @@ import javax.interceptor.InvocationContext;
  */
 public class EJBLoggerAOPExample {
     
+    private Log log = LogFactory.getLog(EJBLoggerAOPExample.class);
+    
     @AroundInvoke
     public Object logMethodEntry(InvocationContext invocationContext) throws Exception{
-        System.out.println("Entering method:" + invocationContext.getMethod().getName());
+        //System.out.println("Entering method:" + invocationContext.getMethod().getName());
+        log.info("Entering method:" + invocationContext.getMethod().getName());
         return invocationContext.proceed();
     }
 }
