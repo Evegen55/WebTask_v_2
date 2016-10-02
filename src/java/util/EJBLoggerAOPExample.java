@@ -26,13 +26,13 @@ import org.apache.commons.logging.LogFactory;
  */
 public class EJBLoggerAOPExample {
     
-    private Log log = LogFactory.getLog(EJBLoggerAOPExample.class);
+    private final Log log = LogFactory.getLog(EJBLoggerAOPExample.class);
     
     @AroundInvoke
     public Object logMethodEntry(InvocationContext invocationContext) throws Exception{
         //System.out.println("Entering method:" + invocationContext.getMethod().getName());
         log.info("Entering method:" + invocationContext.getMethod().getName());
-        log.info("Entering paramethers:" + invocationContext.getParameters() + " " + invocationContext.getTimer());
+        log.info(invocationContext.getParameters());
         return invocationContext.proceed();
     }
 }
